@@ -1,0 +1,24 @@
+﻿@model List<Dal.Models.Role>
+@{
+    ViewBag.Title = "Roles";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>@Html.ActionLink("Create new role", "Create")</p>
+
+<table class="table">
+    <tr>
+        <th>Name</th>
+    </tr>
+@foreach (var r in Model)
+{
+    <tr>
+        <td>@Html.DisplayFor(i => r.Name)</td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = r.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = r.Id })
+        </td>
+    </tr>
+}
+</table>

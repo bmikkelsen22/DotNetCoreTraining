@@ -1,0 +1,33 @@
+﻿@model Dal.Models.Room
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.Title = "Delete Room";
+}
+<h2>@ViewBag.Title</h2>
+<div>
+    <p>
+        Are you sure you would like to delete the room "@Model.Name"? The following departments will be affected:
+    </p>
+    @if (Model.Departments.Count != 0)
+    {
+    <li>
+        @foreach (var dept in Model.Departments)
+        {
+            <ul>@dept.Name</ul>
+        }
+    </li>
+    }
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+
+</div>

@@ -1,0 +1,108 @@
+﻿@model Dal.Models.Department
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.Title = "Edit Department";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Room, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.RoomId, new SelectList((List<Dal.Models.Room>)ViewBag.Rooms, "Id", "Name"), "Choose a room", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Room, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+
+}
+
+<script>
+    function addClicked(){
+        var personDepartment={DepartmentId: @Model.Id, PersonId: $("#add-combobox").val()};
+        $.ajax({
+            type:"post",
+            url: "@Url.Action("AddPD", "Department")",
+            data:personDepartment,
+            success: function(result){
+                $("#people").append(result);
+            },
+            failure: function(request, status, error){
+                console.log(status);
+                console.log(error);
+            },
+            error: function(request, status, error){
+                console.log(status);
+                console.log(error);
+            },
+        });
+
+    }
+    function deleteClicked(personId){
+        var personDepartment={DepartmentId: @Model.Id, PersonId: personId};
+        $.ajax({
+            type:"post",
+            url:"@Url.Action("DeletePD", "Department")",
+            data:personDepartment,
+            success: function(result){
+                $("#people").html(result);
+            },
+            failure: function(request, status, error){
+                console.log(status);
+                console.log(error);
+            },
+            error: function(request, status, error){
+                console.log(status);
+                console.log(error);
+            },
+        });
+    }
+</script>
+<br />
+<div class="control-label col-md-2">
+    <b>People</b>
+</div>
+
+<div >
+    @Html.DropDownList("add-combobox", new SelectList(ViewBag.People, "Id", "Name"), "Select a person", new { @class = "form-control", @id="add-combobox"})
+    <button class="btn btn-default" onclick="addClicked()">Add</button>
+    
+</div>
+<div>
+    <table class="table">
+        <tbody id="people">
+            @foreach (var pd in Model.PersonDepartments.ToList())
+            {
+                @Html.Partial("_PersonDepartmentRow", pd);
+            }
+        </tbody>
+    </table>
+</div>
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

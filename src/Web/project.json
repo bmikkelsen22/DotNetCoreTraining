@@ -25,6 +25,8 @@
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.1.0",
     "Microsoft.AspNetCore.Razor.Tools": "1.1.0-preview4-final",
     "Microsoft.AspNetCore.Server.IISIntegration.Tools": "1.1.0-preview4-final",
+    "Microsoft.VisualStudio.Web.CodeGeneration.Tools": "1.1.0-preview4-final",
+    "Microsoft.VisualStudio.Web.CodeGenerators.Mvc": "1.1.0-preview4-final",
     "Dal": "1.0.0-*"
   },
 
@@ -64,7 +66,6 @@
   },
 
   "scripts": {
-    "prepublish": [ "bower install", "dotnet bundle" ],
     "postpublish": [ "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%" ]
   }
 }

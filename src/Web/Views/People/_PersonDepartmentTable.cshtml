@@ -1,0 +1,11 @@
+﻿@model Dal.Models.PersonDepartment[]
+@*
+    note that this doesnt contain the outside <table></table>
+*@
+@{
+}
+
+@foreach(var pd in Model)
+{
+    @Html.Partial("_PersonDepartmentRow", pd)
+}

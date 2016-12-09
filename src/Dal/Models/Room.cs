@@ -7,11 +7,15 @@ namespace Dal.Models
 {
     public class Room
     {
+        public Room()
+        {
+            this.Departments = new HashSet<Department>();
+        }
         public int Id { get; set; }
 
         public string Name { get; set; }
 
         // TODO: Add Department models
-        //public List<Department> Departments { get; set; }
+        public virtual ICollection<Department> Departments { get; set; }
     }
 }
